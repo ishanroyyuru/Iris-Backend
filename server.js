@@ -42,16 +42,25 @@ async function initializeData() {
     epicAckerman = await scrapeProduct('https://menu.dining.ucla.edu/hours/', 'xpath/.//*[@id="main-content"]/table/tbody/tr[10]');
     rieberTrucks = await scrapeProduct('https://menu.dining.ucla.edu/hours/', 'xpath/.//*[@id="main-content"]/table/tbody/tr[11]');
     sproulTrucks = await scrapeProduct('https://menu.dining.ucla.edu/hours/', 'xpath/.//*[@id="main-content"]/table/tbody/tr[12]');
-
     console.log("Scraping complete.");
 }
 
+// Parse scraped string
 // Parse scraped string
 function getTodaysSchedule(scheduleString) {
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const today = daysOfWeek[new Date().getDay()]; // Get today's day name
 
-    // Regex to capture each day's schedule separately
+    // Check if it's a restaurant-style schedule (contains "Menu ∣ Hours")
+    if (scheduleString.includes("Menu ∣ Hours")) {
+        // Extract all time ranges using regex
+        const timeRegex = /(\d{1,2}(:\d{2})?\s?[ap]\.m\.\s-\s\d{1,2}(:\d{2})?\s?[ap]\.m\.)/gi;
+        const matches = scheduleString.match(timeRegex);
+
+        return matches && matches.length > 0 ? matches.join(", ") : "Closed for today";
+    }
+
+    // Gym-style schedule parsing
     const regex = /(Monday-Thursday|Friday|Saturday|Sunday):\s([\d:AMP -]+)/g;
     let match;
     const schedule = {};
@@ -78,7 +87,6 @@ function getTodaysSchedule(scheduleString) {
 }
 
 
-
 // **API Endpoints**
 app.get('/api/facility/bruin-fit', (req, res) => {
     const todayHours = getTodaysSchedule(bFit);
@@ -90,62 +98,62 @@ app.get('/api/facility/jwc', (req, res) => {
     res.json({ data: todayHours });
 });
 
-app.get('/api/dining/epicuria', (req, res) => {
-    //const todayHours = getTodaysSchedule(epicuria);
-    res.json({ data: epicuria });
+app.get('/api/facility/epicuria', (req, res) => {
+    const todayHours = getTodaysSchedule(epicuria);
+    res.json({ data: todayHours });
 });
 
-app.get('/api/dining/deNeve', (req, res) => {
+app.get('/api/facility/deNeve', (req, res) => {
     const todayHours = getTodaysSchedule(deNeve);
     res.json({ data: todayHours });
 });
 
-app.get('/api/dining/feast', (req, res) => {
+app.get('/api/facility/feast', (req, res) => {
     const todayHours = getTodaysSchedule(feast);
     res.json({ data: todayHours });
 });
 
-app.get('/api/dining/bPlate', (req, res) => {
+app.get('/api/facility/bPlate', (req, res) => {
     const todayHours = getTodaysSchedule(bPlate);
     res.json({ data: todayHours });
 });
 
-app.get('/api/dining/bCafe', (req, res) => {
+app.get('/api/facility/bCafe', (req, res) => {
     const todayHours = getTodaysSchedule(bCafe);
     res.json({ data: todayHours });
 });
 
-app.get('/api/dining/cafe1919', (req, res) => {
+app.get('/api/facility/cafe1919', (req, res) => {
     const todayHours = getTodaysSchedule(cafe1919);
     res.json({ data: todayHours });
 });
 
-app.get('/api/dining/rende', (req, res) => {
+app.get('/api/facility/rende', (req, res) => {
     const todayHours = getTodaysSchedule(rende);
     res.json({ data: todayHours });
 });
 
-app.get('/api/dining/study', (req, res) => {
+app.get('/api/facility/study', (req, res) => {
     const todayHours = getTodaysSchedule(study);
     res.json({ data: todayHours });
 });
 
-app.get('/api/dining/drey', (req, res) => {
+app.get('/api/facility/drey', (req, res) => {
     const todayHours = getTodaysSchedule(drey);
     res.json({ data: todayHours });
 });
 
-app.get('/api/dining/epicAckerman', (req, res) => {
+app.get('/api/facility/epicAckerman', (req, res) => {
     const todayHours = getTodaysSchedule(epicAckerman);
     res.json({ data: todayHours });
 });
 
-app.get('/api/dining/rieberTrucks', (req, res) => {
+app.get('/api/facility/rieberTrucks', (req, res) => {
     const todayHours = getTodaysSchedule(rieberTrucks);
     res.json({ data: todayHours });
 });
 
-app.get('/api/dining/sproulTrucks', (req, res) => {
+app.get('/api/facility/sproulTrucks', (req, res) => {
     const todayHours = getTodaysSchedule(sproulTrucks);
     res.json({ data: todayHours });
 });
