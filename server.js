@@ -57,7 +57,39 @@ function getTodaysSchedule(scheduleString) {
         const timeRegex = /(\d{1,2}(:\d{2})?\s?[ap]\.m\.\s-\s\d{1,2}(:\d{2})?\s?[ap]\.m\.)/gi;
         const matches = scheduleString.match(timeRegex);
 
-        return matches && matches.length > 0 ? matches.join(", ") : "Closed for today";
+        if (!matches || matches.length === 0) return "Closed for today";
+
+        // Define meal categories
+        const meals = {
+            breakfast: null,
+            lunch: null,
+            dinner: null,
+            "late night": null
+        };
+
+        // Categorize times based on common meal hours
+        matches.forEach(timeRange => {
+            const [startTime] = timeRange.split(" - ");
+            const hour = parseInt(startTime.match(/\d{1,2}/)[0], 10);
+            const isPM = startTime.includes("p.m.");
+
+            if (hour >= 6 && hour < 11 && !isPM) {
+                meals.breakfast = timeRange;
+            } else if ((hour === 11 && !isPM) || (hour < 4 && isPM)) {
+                meals.lunch = timeRange;
+            } else if ((hour >= 4 && hour < 10 && isPM)) {
+                meals.dinner = timeRange;
+            } else if ((hour >= 10 && isPM) || (hour < 6 && !isPM)) {
+                meals["late night"] = timeRange;
+            }
+        });
+
+        // Format the output
+        const formattedMeals = Object.entries(meals).map(([meal, time]) =>
+            `${meal}: ${time ? time : "closed"}`
+        );
+
+        return formattedMeals.every(entry => entry.includes("closed")) ? "Closed for today" : formattedMeals.join("\n");
     }
 
     // Gym-style schedule parsing
@@ -85,7 +117,6 @@ function getTodaysSchedule(scheduleString) {
 
     return schedule[today] || "Closed for today"; // Return today's hours
 }
-
 
 // **API Endpoints**
 app.get('/api/facility/bruin-fit', (req, res) => {
