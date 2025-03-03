@@ -46,17 +46,108 @@ async function initializeData() {
     console.log("Scraping complete.");
 }
 
+// Parse scraped string
+function getTodaysSchedule(scheduleString) {
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const today = daysOfWeek[new Date().getDay()]; // Get today's day name
+
+    // Regex to capture each day's schedule separately
+    const regex = /(Monday-Thursday|Friday|Saturday|Sunday):\s([\d:AMP -]+)/g;
+    let match;
+    const schedule = {};
+
+    while ((match = regex.exec(scheduleString)) !== null) {
+        let days = match[1]; // "Monday-Thursday" or "Friday" etc.
+        let hours = match[2]; // Corresponding time range
+
+        if (days.includes('-')) {
+            let [startDay, endDay] = days.split('-'); // E.g., Monday-Thursday -> ["Monday", "Thursday"]
+            let startIndex = daysOfWeek.indexOf(startDay);
+            let endIndex = daysOfWeek.indexOf(endDay);
+
+            // Assign the same hours to all days in the range
+            for (let i = startIndex; i <= endIndex; i++) {
+                schedule[daysOfWeek[i]] = hours;
+            }
+        } else {
+            schedule[days] = hours; // Assign hours for single-day entries
+        }
+    }
+
+    return schedule[today] || "Closed for today"; // Return today's hours
+}
+
+
+
 // **API Endpoints**
 app.get('/api/facility/bruin-fit', (req, res) => {
-    res.json({ data: bFit || "Data not available yet" });
+    const todayHours = getTodaysSchedule(bFit);
+    res.json({ data: todayHours });
 });
 
 app.get('/api/facility/jwc', (req, res) => {
-    res.json({ data: jwc || "Data not available yet" });
+    const todayHours = getTodaysSchedule(jwc);
+    res.json({ data: todayHours });
 });
 
 app.get('/api/dining/epicuria', (req, res) => {
-    res.json({ data: epicuria || "Data not available yet" });
+    //const todayHours = getTodaysSchedule(epicuria);
+    res.json({ data: epicuria });
+});
+
+app.get('/api/dining/deNeve', (req, res) => {
+    const todayHours = getTodaysSchedule(deNeve);
+    res.json({ data: todayHours });
+});
+
+app.get('/api/dining/feast', (req, res) => {
+    const todayHours = getTodaysSchedule(feast);
+    res.json({ data: todayHours });
+});
+
+app.get('/api/dining/bPlate', (req, res) => {
+    const todayHours = getTodaysSchedule(bPlate);
+    res.json({ data: todayHours });
+});
+
+app.get('/api/dining/bCafe', (req, res) => {
+    const todayHours = getTodaysSchedule(bCafe);
+    res.json({ data: todayHours });
+});
+
+app.get('/api/dining/cafe1919', (req, res) => {
+    const todayHours = getTodaysSchedule(cafe1919);
+    res.json({ data: todayHours });
+});
+
+app.get('/api/dining/rende', (req, res) => {
+    const todayHours = getTodaysSchedule(rende);
+    res.json({ data: todayHours });
+});
+
+app.get('/api/dining/study', (req, res) => {
+    const todayHours = getTodaysSchedule(study);
+    res.json({ data: todayHours });
+});
+
+app.get('/api/dining/drey', (req, res) => {
+    const todayHours = getTodaysSchedule(drey);
+    res.json({ data: todayHours });
+});
+
+app.get('/api/dining/epicAckerman', (req, res) => {
+    const todayHours = getTodaysSchedule(epicAckerman);
+    res.json({ data: todayHours });
+});
+
+app.get('/api/dining/rieberTrucks', (req, res) => {
+    const todayHours = getTodaysSchedule(rieberTrucks);
+    res.json({ data: todayHours });
+});
+
+app.get('/api/dining/sproulTrucks', (req, res) => {
+    const todayHours = getTodaysSchedule(sproulTrucks);
+    res.json({ data: todayHours });
 });
 
 // **Start the Server After Initializing Data**
