@@ -1,4 +1,4 @@
-# UCLA Amenities Hours App
+# UCLA BruinOnTime
 
 🏆 **Built for ACM Hack on the Hill**
 
