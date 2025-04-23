@@ -1,46 +1,49 @@
-UCLA BruinOnTime
-🏆 Built for ACM Hack on the Hill
+# UCLA Amenities Hours App
 
-This project was created during the ACM Hack on the Hill hackathon at UCLA. Our team set out to solve a common student problem: not knowing when various campus amenities are open. Whether it's the gym, libraries, dining halls, or study spaces, our app brings all the UCLA facility hours into one simple and accessible place.
+🏆 **Built for ACM Hack on the Hill**
 
-🚀 Features
-📍 Real-time display of open/closed status
+A mobile app built to help UCLA students easily check the open/closed hours of campus amenities like gyms, libraries, dining halls, and more — all in one place.
 
-🕒 Daily and weekly hour views
+---
 
-🔍 Easy search for amenities across campus
+## 🚀 Features
 
-🌙 Late-night options filtering
+- 📍 Real-time open/closed status
+- 🕒 Daily and weekly hour views
+- 🔍 Search across all UCLA amenities
+- 🌙 Filter for late-night options
+- 📱 Mobile-friendly interface
 
-📱 Mobile-friendly design
+---
 
-🛠 Tech Stack
-Frontend: React Native with Expo
+## 🛠 Tech Stack
 
-Backend: Firebase (for storage and real-time updates)
+- **Frontend:** React Native with [Expo](https://expo.dev/)
+- **Backend:** Firebase (data storage + real-time updates)
+- **Data Source:** Scraped from official UCLA websites
 
-APIs & Data: Scraped data from official UCLA websites
+---
 
-📸 Screenshots
-Coming soon — polishing the UI!
+## 👥 Team
 
-👥 Team
-Built with 💙 by:
+Built with 💙 at ACM Hack on the Hill by:
 
-Ishan Royyuru
+- Ishan Royyuru
+- Bryan Ly
+- Ian Kung
+- Gary Li
 
-Bryan Ly
+---
 
-Ian Kung
+## 📌 Future Plans
 
-Gary Li
+- 🗺 Google Maps integration for directions
+- ✏️ User-submitted corrections for hours
+- 🔔 Notifications for closing times
 
-📌 Future Plans
-Add Google Maps integration for directions
+---
 
-Enable user submissions for hours corrections
+## 📝 License
 
-Notifications for closing times
-
-📝 License
-This project is for educational and demonstrational purposes only. Not affiliated with UCLA.
+This project is for educational and demonstrational purposes only.  
+**Not affiliated with UCLA.**
