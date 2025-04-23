@@ -19,7 +19,7 @@ A mobile app built to help UCLA students easily check the open/closed hours of c
 ## 🛠 Tech Stack
 
 - **Frontend:** React Native with [Expo](https://expo.dev/)
-- **Backend:** Firebase (data storage + real-time updates)
+- **Backend:** Express.js, Node.js
 - **Data Source:** Scraped from official UCLA websites
 
 ---
