@@ -11,7 +11,6 @@ A mobile app built to help UCLA students easily check the open/closed hours of c
 - 📍 Real-time open/closed status
 - 🕒 Daily and weekly hour views
 - 🔍 Search across all UCLA amenities
-- 🌙 Filter for late-night options
 - 📱 Mobile-friendly interface
 
 ---
